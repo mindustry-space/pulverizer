@@ -1,0 +1,10 @@
+{
+  "author": "jyooru",
+  "description": "Crushes Mindustry content into fine JSON",
+  "displayName": "Pulverizer",
+  "hidden": true,
+  "minGameVersion": 135,
+  "name": "pulverizer",
+  "repo": "mindustry-space/pulverizer",
+  "version": "0.0.1"
+}
