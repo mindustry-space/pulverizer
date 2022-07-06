@@ -52,12 +52,19 @@ function crushClass(obj, doNotRecurseFurther) {
       case "arc.graphics.g2d.TextureAtlas$AtlasRegion":
         return obj.name;
 
-      case "arc.struct.Bits":
+      case "arc.struct.Bits": {
         let result = [];
         for (let i = 0; i < obj.length(); i++) {
           result.push(obj.get(i));
         }
         return result;
+      }
+
+      case "arc.struct.EnumSet": {
+        let result = [];
+        obj.forEach((v) => result.push(v.toString()));
+        return result;
+      }
 
       case "arc.struct.Seq": {
         // typeof obj == "object"
