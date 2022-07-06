@@ -88,6 +88,9 @@ function crushClass(obj, doNotRecurseFurther) {
       case "java.lang.Class":
         return;
 
+      case "java.lang.Enum":
+        return obj.toString();
+
       case "mindustry.content.TechTree$TechNode":
         // TODO
         return;
