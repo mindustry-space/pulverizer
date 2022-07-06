@@ -11,10 +11,7 @@ function main() {
   const callback = () => {
     const content = Vars.content.getContentMap();
     const skip = [
-      ContentType.block, // TODO
       ContentType.mech_UNUSED,
-      ContentType.bullet, // TODO
-      ContentType.unit, // TODO
       ContentType.effect_UNUSED,
       ContentType.sector, // TODO
       ContentType.loadout_UNUSED,
@@ -23,9 +20,9 @@ function main() {
       ContentType.planet, // TODO
       ContentType.ammo_UNUSED,
     ].map((v) => v.ordinal());
-    if (Object.keys(ContentType).includes("team")) {
-      skip.push(ContentType.team); // in development
-    }
+    // if (Object.keys(ContentType).includes("team")) {
+    //   skip.push(ContentType.team); // in development
+    // }
 
     for (let i = 0; i < ContentType.all.length; i++) {
       if (skip.includes(i)) continue;

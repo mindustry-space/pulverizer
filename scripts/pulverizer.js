@@ -51,19 +51,21 @@ function crushClass(obj, doNotRecurseFurther) {
     if (contentClasses.includes(type.name)) {
       isContentClass = true;
     }
-    // log(type.name + " " + isContentClass + " " + doNotRecurseFurther);
 
     if (doNotRecurseFurther && isContentClass) {
       return obj.id;
     }
 
     switch (type.name) {
+      case "arc.graphics.g2d.TextureAtlas$AtlasRegion":
+        return obj["name"];
+
       case "arc.struct.Seq": {
         // convert "object" into array
 
         let result = [];
         for (let i = 0; i < obj.size; i++) {
-          let v = crush(obj.get(i));
+          let v = crush(obj.get(i), doNotRecurseFurther);
           if (v !== undefined) {
             result.push(v);
           }
@@ -81,6 +83,7 @@ function crushClass(obj, doNotRecurseFurther) {
       default: {
         type = type.getSuperclass();
         if (type === null) {
+          // print(actualType.name + "-> object");
           if (isContentClass) return crushObject(obj, true);
           return crushObject(obj, doNotRecurseFurther);
         }
