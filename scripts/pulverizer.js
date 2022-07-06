@@ -56,13 +56,25 @@ function crushClass(obj, doNotRecurseFurther) {
       return obj.id;
     }
 
+    if (type.name.startsWith("[L") && type.name.endsWith(";")) {
+      // [LT; == T[]
+      // typeof obj == "object"
+      let result = [];
+      for (let i = 0; i < obj.length; i++) {
+        let v = crush(obj[i], doNotRecurseFurther);
+        if (v !== undefined) {
+          result.push(v);
+        }
+      }
+      return result;
+    }
+
     switch (type.name) {
       case "arc.graphics.g2d.TextureAtlas$AtlasRegion":
-        return obj["name"];
+        return obj.name;
 
       case "arc.struct.Seq": {
-        // convert "object" into array
-
+        // typeof obj == "object"
         let result = [];
         for (let i = 0; i < obj.size; i++) {
           let v = crush(obj.get(i), doNotRecurseFurther);
