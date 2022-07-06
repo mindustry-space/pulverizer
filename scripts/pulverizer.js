@@ -1,27 +1,3 @@
-function getContentClasses() {
-  if (Version.build >= 136) {
-    // enum contains classes
-    return ContentType.all.map((v) =>
-      v.contentClass ? v.contentClass.name : null
-    );
-  }
-
-  return [
-    "mindustry.type.Item",
-    "mindustry.world.Block",
-    "mindustry.entities.bullet.BulletType",
-    "mindustry.type.Liquid",
-    "mindustry.type.StatusEffect",
-    "mindustry.type.UnitType",
-    "mindustry.type.Weather",
-    "mindustry.type.SectorPreset",
-    "mindustry.type.Planet",
-    "mindustry.type.TeamEntry",
-  ];
-}
-
-const contentClasses = getContentClasses();
-
 function crush(any, doNotRecurseFurther) {
   switch (typeof any) {
     case "function":
@@ -48,7 +24,7 @@ function crushClass(obj, doNotRecurseFurther) {
   let type = actualType;
   let isContentClass = false;
   while (true) {
-    if (contentClasses.includes(type.name)) {
+    if (type.name === "mindustry.ctype.Content") {
       isContentClass = true;
     }
 
