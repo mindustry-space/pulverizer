@@ -46,8 +46,11 @@ function crushClass(obj, doNotRecurseFurther) {
     }
 
     switch (type.name) {
-      case "arc.audio.Sound":
-        return obj.toString().replace("SoloudSound: ", "");
+      case "arc.audio.Sound": {
+        let v = obj.toString().replace("SoloudSound: ", "");
+        if (v === "null") return null;
+        return v;
+      }
 
       case "arc.graphics.g2d.TextureAtlas$AtlasRegion":
         return obj.name;
