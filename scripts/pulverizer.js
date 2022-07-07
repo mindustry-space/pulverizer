@@ -78,9 +78,17 @@ function crushClass(obj, doNotRecurseFurther) {
         }
       }
 
-      case "arc.struct.ObjectSet": {
-        return crush(obj.iterator().toSeq(), doNotRecurseFurther);
+      case "arc.struct.ObjectMap": {
+        let result = {};
+        obj.each({
+          get: (k, v) =>
+            (result[crush(k, true)] = crush(v, doNotRecurseFurther)),
+        });
+        return result;
       }
+
+      case "arc.struct.ObjectSet":
+        return crush(obj.iterator().toSeq(), doNotRecurseFurther);
 
       case "arc.struct.Seq": {
         // typeof obj == "object"
