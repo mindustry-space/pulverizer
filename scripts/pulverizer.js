@@ -6,7 +6,7 @@ function crush(any, doNotRecurseFurther) {
     case "object":
       if (any === null) return null;
 
-      if (typeof any["getClass"] === "function")
+      if (typeof any.getClass === "function")
         return crushClass(any, doNotRecurseFurther);
 
       return crushObject(any, doNotRecurseFurther);
@@ -67,6 +67,10 @@ function crushClass(obj, doNotRecurseFurther) {
         let result = [];
         obj.forEach((v) => result.push(v.toString()));
         return result;
+      }
+
+      case "arc.struct.ObjectSet": {
+        return crush(obj.iterator().toSeq(), doNotRecurseFurther);
       }
 
       case "arc.struct.Seq": {
