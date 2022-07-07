@@ -18,8 +18,12 @@ const skip = [
 
 function run() {
   const content = Vars.content.getContentMap();
-
   file.mkdir();
+
+  let writer = java.io.FileWriter(path + "/version.json");
+  writer.write(JSON.stringify(pulverizer.crushObject(Version)));
+  writer.close();
+
   for (let i = 0; i < ContentType.all.length; i++) {
     if (skip.includes(i)) continue;
 
