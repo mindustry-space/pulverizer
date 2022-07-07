@@ -86,6 +86,15 @@ function crushClass(obj, doNotRecurseFurther) {
         }
       }
 
+      case "arc.struct.ObjectFloatMap": {
+        let result = {};
+        obj.each({
+          get: (e) =>
+            (result[crush(e.key, true)] = crush(e.value, doNotRecurseFurther)),
+        });
+        return result;
+      }
+
       case "arc.struct.ObjectMap": {
         let result = {};
         obj.each({
