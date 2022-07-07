@@ -91,6 +91,13 @@ function crushClass(obj, doNotRecurseFurther) {
         // TODO
         return;
 
+      case "mindustry.world.blocks.Attributes":
+        let result = {};
+        for (let attribute of Attribute.all) {
+          result[attribute.toString()] = obj.get(attribute);
+        }
+        return result;
+
       default: {
         type = type.getSuperclass();
         if (type === null) {
