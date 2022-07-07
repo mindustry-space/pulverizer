@@ -55,6 +55,9 @@ function crushClass(obj, doNotRecurseFurther) {
       case "arc.graphics.g2d.TextureAtlas$AtlasRegion":
         return obj.name;
 
+      case "arc.graphics.g2d.TextureRegion":
+        return;
+
       case "arc.struct.Bits": {
         let result = [];
         for (let i = 0; i < obj.length(); i++) {
@@ -64,9 +67,15 @@ function crushClass(obj, doNotRecurseFurther) {
       }
 
       case "arc.struct.EnumSet": {
-        let result = [];
-        obj.forEach((v) => result.push(v.toString()));
-        return result;
+        if (obj.array !== undefined) {
+          // > v135
+          return crush(obj.array, doNotRecurseFurther);
+        } else {
+          // <= v135
+          let result = [];
+          obj.forEach((v) => result.push(v.toString()));
+          return result;
+        }
       }
 
       case "arc.struct.ObjectSet": {
