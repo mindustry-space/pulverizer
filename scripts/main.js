@@ -3,7 +3,8 @@ const pulverizer = require("pulverizer");
 
 const displayName = "Pulverizer";
 const file = java.io.File(Version.combined().replace(/\s/g, "-"));
-const information = "Crushing content to " + file.getAbsolutePath() + ".";
+const path = file.getAbsolutePath();
+const information = "Crushing content to " + path + ".";
 const skip = [
   ContentType.mech_UNUSED,
   ContentType.effect_UNUSED,
@@ -15,7 +16,7 @@ const skip = [
   ContentType.ammo_UNUSED,
 ].map((v) => v.ordinal());
 
-function afterDialog() {
+function run() {
   const content = Vars.content.getContentMap();
 
   file.mkdir();
@@ -24,9 +25,7 @@ function afterDialog() {
 
     let type = ContentType.all[i].toString();
     print("Crushing ContentType." + type + "...");
-    let writer = java.io.FileWriter(
-      file.getAbsolutePath() + "/" + type + ".json"
-    );
+    let writer = java.io.FileWriter(path + "/" + type + ".json");
     writer.write(JSON.stringify(pulverizer.crush(content[i])));
     writer.close();
   }
@@ -36,11 +35,11 @@ function afterDialog() {
 
 function main() {
   print(information);
-
   const dialog = new BaseDialog(displayName);
   dialog.cont.add(information);
   dialog.show();
-  new Timer.schedule(afterDialog, 1);
+
+  new Timer.schedule(run, 1);
 }
 
 Events.on(ClientLoadEvent, main);
