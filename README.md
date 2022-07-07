@@ -2,6 +2,8 @@
 
 Pulverizer is a Mindustry mod that scrapes data from the game's content into JSON files.
 
+Output data is available in [the sand repository](https://github.com/mindustry-space/sand).
+
 ## Installation
 
 Pulverizer can be installed using the game's built-in mod browser.
