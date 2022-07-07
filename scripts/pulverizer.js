@@ -19,6 +19,18 @@ function crush(any, doNotRecurseFurther) {
   }
 }
 
+function crushArray(arr, doNotRecurseFurther) {
+  // typeof arr == "object"
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    let v = crush(arr[i], doNotRecurseFurther);
+    if (v !== undefined) {
+      result.push(v);
+    }
+  }
+  return result;
+}
+
 function crushClass(obj, doNotRecurseFurther) {
   let actualType = obj.getClass();
   let type = actualType;
@@ -34,18 +46,14 @@ function crushClass(obj, doNotRecurseFurther) {
 
     if (type.name.startsWith("[L") && type.name.endsWith(";")) {
       // [LT; == T[]
-      // typeof obj == "object"
-      let result = [];
-      for (let i = 0; i < obj.length; i++) {
-        let v = crush(obj[i], doNotRecurseFurther);
-        if (v !== undefined) {
-          result.push(v);
-        }
-      }
-      return result;
+      return crushArray(obj, doNotRecurseFurther);
     }
 
     switch (type.name) {
+      case "[Z":
+        // boolean[]
+        return crushArray(obj, doNotRecurseFurther);
+
       case "arc.audio.Sound": {
         let v = obj.toString().replace("SoloudSound: ", "");
         if (v === "null") return null;
